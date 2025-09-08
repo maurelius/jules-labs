@@ -308,7 +308,10 @@ class _HoleOverviewScreenState extends State<HoleOverviewScreen> {
                 onTap: _handleMapTap, // Handle map taps
               ),
               children: [
-                OpenStreetMapTileLayer(),
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.example.app',
+                ),
                 if (markers.isNotEmpty) MarkerLayer(markers: markers),
               ],
             ),

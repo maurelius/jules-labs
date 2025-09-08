@@ -1,0 +1,10 @@
+*/local.properties
+golf_gps_app/.flutter-plugins-dependencies
+golf_gps_app/.idea
+golf_gps_app/.vscode
+golf_gps_app/build
+golf_gps_app/ios
+golf_gps_app/ios/Runner.xcworkspace
+golf_gps_app/ios/Runner.xcworkspace/xcuserdata
+golf_gps_app/.dart_tool/package_config_subset
+golf_gps_app/android/local.properties

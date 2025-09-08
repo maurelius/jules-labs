@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:golf_gps_app/models/course_model.dart';
-import 'package:golf_gps_app/widgets/course_list_item.dart';
 import 'package:golf_gps_app/services/course_service.dart';
 import 'package:golf_gps_app/services/gps_service.dart'; // For fetching current location
 import 'package:geolocator/geolocator.dart'; // For Position object
