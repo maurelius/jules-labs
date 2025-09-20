@@ -8,6 +8,7 @@ import TeeSheetPage from './pages/TeeSheetPage';
 import TeeTimeFormPage from './pages/TeeTimeFormPage';
 import Navbar from './components/Navbar';
 import { ThemeProvider } from './context/ThemeContext';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
     return (
@@ -16,12 +17,14 @@ function App() {
                 <div>
                     <Navbar />
                     <Routes>
-                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                        <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/login" element={<LoginPage />} />
-                        <Route path="/teetimes" element={<TeeSheetPage />} />
-                        <Route path="/teetimes/new" element={<TeeTimeFormPage />} />
-                        <Route path="/teetimes/:id" element={<TeeTimeFormPage />} />
+                        <Route element={<PrivateRoute />}>
+                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                            <Route path="/dashboard" element={<DashboardPage />} />
+                            <Route path="/teetimes" element={<TeeSheetPage />} />
+                            <Route path="/teetimes/new" element={<TeeTimeFormPage />} />
+                            <Route path="/teetimes/:id" element={<TeeTimeFormPage />} />
+                        </Route>
                     </Routes>
                 </div>
             </StyledThemeProvider>

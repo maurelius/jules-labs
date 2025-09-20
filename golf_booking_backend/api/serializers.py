@@ -4,7 +4,7 @@ from .models import Golfer, TeeTime, Booking
 class GolferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Golfer
-        fields = '__all__'
+        fields = ['id', 'name', 'email', 'phone', 'notes']
 
 class TeeTimeSerializer(serializers.ModelSerializer):
     class Meta:
