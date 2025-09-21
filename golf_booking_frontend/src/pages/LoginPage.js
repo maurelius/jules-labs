@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        console.log('Login clicked');
-        console.log('Username:', username);
-        console.log('Password:', password);
-        // Later, implement actual API call for login
+        try {
+            const response = await fetch('http://localhost:8000/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem('token', data.key);
+                navigate('/dashboard');
+            } else {
+                console.error('Login failed:', data);
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+        }
     };
 
     return (
