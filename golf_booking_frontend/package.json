@@ -19,7 +19,9 @@
     "eslint": "^8.57.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^4.0.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "webpack-dev-server": "^5.2.1",
+    "postcss": "^8.4.49"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -5,17 +5,14 @@ from .serializers import GolferSerializer, TeeTimeSerializer, BookingSerializer
 class GolferViewSet(viewsets.ModelViewSet):
     queryset = Golfer.objects.all()
     serializer_class = GolferSerializer
-    permission_classes = [permissions.AllowAny] # For now, allow any access.
 
 class TeeTimeViewSet(viewsets.ModelViewSet):
     queryset = TeeTime.objects.all().order_by('start_time')
     serializer_class = TeeTimeSerializer
-    permission_classes = [permissions.AllowAny] # For now, allow any access.
 
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    permission_classes = [permissions.AllowAny] # For now, allow any access.
 
     def perform_create(self, serializer):
         tee_time = serializer.validated_data['tee_time']
