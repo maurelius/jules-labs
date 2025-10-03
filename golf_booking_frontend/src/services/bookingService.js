@@ -1,11 +1,26 @@
 const API_URL = 'http://localhost:8000/api/bookings/';
 
 export const getAllBookings = async () => {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-        throw new Error('Failed to fetch bookings');
+    try {
+        console.log('Attempting to fetch bookings from:', API_URL);
+        const response = await fetch(API_URL);
+        console.log('Response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers));
+        
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (!response.ok) {
+            throw new Error(
+                `Failed to fetch bookings: ${response.status} ${response.statusText}` +
+                ` - ${JSON.stringify(data)}`
+            );
+        }
+        return data;
+    } catch (error) {
+        console.error('Booking fetch error:', error);
+        throw error;
     }
-    return await response.json();
 };
 
 export const createBooking = async (bookingData) => {

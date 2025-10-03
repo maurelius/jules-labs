@@ -1,52 +1,94 @@
-const API_URL = 'http://localhost:8000/api/teetimes/';
+import { API_URL } from '../config';
 
-export const getAllTeeTimes = async (params = {}) => {
-    // Example: params = { ordering: 'start_time' }
-    const query = new URLSearchParams(params).toString();
-    const requestUrl = query ? `${API_URL}?${query}` : API_URL;
-    const response = await fetch(requestUrl);
-    if (!response.ok) {
-        throw new Error('Failed to fetch tee times');
+export const getAllTeeTimes = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/teetimes/?ordering=start_time`);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(
+                `Failed to fetch tee times: ${response.status} ${response.statusText}` +
+                (errorData ? ` - ${JSON.stringify(errorData)}` : '')
+            );
+        }
+
+        const data = await response.json();
+        console.log('Fetched tee times:', data); // Debug log
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error('Error fetching tee times:', error);
+        throw error;
     }
-    return await response.json();
 };
 
 export const getTeeTimeById = async (id) => {
-    const response = await fetch(`${API_URL}${id}/`);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch tee time with id ${id}`);
+    try {
+        const response = await fetch(`${API_URL}/api/teetimes/${id}/`);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(
+                `Failed to fetch tee time: ${response.status} ${response.statusText}` +
+                (errorData ? ` - ${JSON.stringify(errorData)}` : '')
+            );
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching tee time:', error);
+        throw error;
     }
-    return await response.json();
 };
 
 export const createTeeTime = async (teeTimeData) => {
-    const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(teeTimeData),
-    });
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to create tee time');
+    try {
+        console.log('Creating tee time with data:', teeTimeData); // Debug log
+        const response = await fetch(`${API_URL}/api/teetimes/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(teeTimeData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(
+                `Failed to create tee time: ${response.status} ${response.statusText}` +
+                (errorData ? ` - ${JSON.stringify(errorData)}` : '')
+            );
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating tee time:', error);
+        throw error;
     }
-    return await response.json();
 };
 
 export const updateTeeTime = async (id, teeTimeData) => {
-    const response = await fetch(`${API_URL}${id}/`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(teeTimeData),
-    });
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || `Failed to update tee time with id ${id}`);
+    try {
+        const response = await fetch(`${API_URL}/api/teetimes/${id}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(teeTimeData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            throw new Error(
+                `Failed to update tee time: ${response.status} ${response.statusText}` +
+                (errorData ? ` - ${JSON.stringify(errorData)}` : '')
+            );
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error updating tee time:', error);
+        throw error;
     }
-    return await response.json();
 };
 
 export const deleteTeeTime = async (id) => {
